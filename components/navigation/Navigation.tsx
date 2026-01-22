@@ -73,13 +73,25 @@ export default function Navigation() {
     <>
       {/* Fixed Navigation */}
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 transition-all duration-700 ${
-          scrolled ? "mix-blend-difference" : ""
-        }`}
+        className={[
+          "fixed top-0 left-0 right-0 z-[100] isolate",
+          "px-6 md:px-12 py-5 md:py-3",
+          "transition-all duration-300",
+          isOpen ? "bg-[#f5f5f0]" : "",
+        ].join(" ")}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
       >
+        {!isOpen && scrolled && (
+          <div
+            className={[
+              "absolute inset-0 -z-10",
+              "backdrop-blur-sm",
+              "bg-black/10",
+            ].join(" ")}
+          />
+        )}
         <nav className="flex items-center justify-between">
           {/* Logo */}
           <Link
@@ -118,13 +130,27 @@ export default function Navigation() {
                 className="group relative"
                 onClick={closeMenu}
               >
-                <span className="text-xs tracking-[0.2em] uppercase text-stone-300 group-hover:text-stone-100 transition-colors duration-300">
+                <span
+                  className={[
+                    "text-xs tracking-[0.2em] uppercase transition-colors duration-300",
+                    isOpen
+                      ? "text-stone-700 group-hover:text-stone-950"
+                      : scrolled
+                        ? "text-stone-100/90 hover:text-stone-950"
+                        : "text-stone-100/80 group-hover:text-stone-950 drop-shadow-[0_1px_6px_rgba(0,0,0,0.25)]",
+                  ].join(" ")}
+                >
                   {link.label}
                 </span>
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#c9a962] group-hover:w-full transition-all duration-500" />
               </Link>
             ))}
-            <LanguageSwitch className="text-stone-300 hover:text-stone-100 ml-8 cursor-pointer" />
+            <LanguageSwitch
+              className={[
+                "ml-8 cursor-pointer transition-colors",
+                "text-stone-100/80 hover:text-stone-950",
+              ].join(" ")}
+            />
           </div>
 
           {/* Menu Button */}
