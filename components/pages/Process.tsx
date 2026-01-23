@@ -139,25 +139,30 @@ function ProcessStep({
   return (
     <motion.div
       ref={ref}
-      className={`relative min-h-screen flex items-center ${isEven ? "" : "flex-row-reverse"}`}
+      className={[
+        "relative min-h-screen flex flex-col lg:flex-row items-stretch",
+        !isEven ? "lg:flex-row-reverse" : "",
+      ].join(" ")}
     >
       {/* Number */}
       <motion.div
-        className={`absolute top-1/2 -translate-y-1/2 ${
-          isEven ? "left-6 md:left-12" : "right-6 md:right-12"
-        } z-20`}
+        className={[
+          "hidden lg:block",
+          "absolute top-1/2 -translate-y-1/2 z-20 pointer-events-none",
+          isEven ? "left-6 md:left-12" : "right-6 md:right-12",
+        ].join(" ")}
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 0.1 } : {}}
         transition={{ duration: 1 }}
       >
-        <span className="text-[30vw] font-extralight text-stone-100 select-none pointer-events-none">
+        <span className="text-[30vw] font-extralight text-stone-100 select-none">
           {step.number}
         </span>
       </motion.div>
 
       {/* Image */}
       <div
-        className={`w-full lg:w-1/2 h-[60vh] lg:h-screen relative ${isEven ? "lg:pl-0" : "lg:pr-0"}`}
+        className={`w-full lg:w-1/2 h-[58vh] sm:h-[64vh] md:h-[72vh] lg:h-screen relative ${isEven ? "lg:pl-0" : "lg:pr-0"}`}
       >
         <motion.div
           className="absolute inset-0 overflow-hidden"
@@ -167,6 +172,23 @@ function ProcessStep({
           animate={isInView ? { clipPath: "inset(0 0 0 0)" } : {}}
           transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
         >
+          {/* Number grande (mobile) */}
+          <motion.div
+            className={[
+              "lg:hidden",
+              "absolute inset-0 z-20 pointer-events-none flex items-end",
+              isEven ? "justify-start" : "justify-end",
+              "px-5 pb-4",
+            ].join(" ")}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 0.12 } : {}}
+            transition={{ duration: 1 }}
+          >
+            <span className="text-[42vw] font-extralight text-stone-100 leading-none">
+              {step.number}
+            </span>
+          </motion.div>
+
           <motion.img
             src={step.image}
             alt={language === "pt" ? step.title_pt : step.title_en}
@@ -180,7 +202,13 @@ function ProcessStep({
 
       {/* Content */}
       <div
-        className={`w-full lg:w-1/2 px-6 md:px-12 lg:px-20 py-16 lg:py-0 ${isEven ? "lg:pl-20" : "lg:pr-20"}`}
+        className={[
+          "w-full lg:w-1/2",
+          "px-6 md:px-12 lg:px-20",
+          "py-12 lg:py-0",
+          "lg:flex lg:items-center",
+          isEven ? "lg:pl-20" : "lg:pr-20",
+        ].join(" ")}
       >
         <motion.div
           className="max-w-xl"
