@@ -31,13 +31,20 @@ export default function ManifestoSection() {
     >
       {/* Background Typography */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-        <motion.div style={{ x: x1 }} className="absolute top-20 -left-20">
-          <span className="text-[20vw] font-extralight text-stone-200/50 tracking-[-0.05em]">
+        <motion.div
+          style={{ x: x1 }}
+          className="absolute top-20 left-2 sm:-left-10 md:-left-20"
+        >
+          <span className="text-[24vw] sm:text-[20vw] font-extralight text-stone-200/50 tracking-[-0.05em] whitespace-nowrap">
             VIEW
           </span>
         </motion.div>
-        <motion.div style={{ x: x2 }} className="absolute bottom-20 -right-20">
-          <span className="text-[15vw] font-extralight text-stone-200/50 tracking-[-0.05em]">
+
+        <motion.div
+          style={{ x: x2 }}
+          className="absolute bottom-20 right-2 sm:-right-10 md:-right-20"
+        >
+          <span className="text-[15vw] sm:text-[15vw] font-extralight text-stone-200/50 tracking-[-0.05em] whitespace-nowrap">
             ARQUITETURA
           </span>
         </motion.div>
