@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Link from "next/link";
 import { withLocale } from "@/lib/withLocale";
@@ -38,6 +38,20 @@ const steps = [
   },
 ];
 
+function useIsLgUp() {
+  const [isLg, setIsLg] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => setIsLg(mq.matches);
+    onChange();
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
+
+  return isLg;
+}
+
 export default function ProcessPreview() {
   const { t, language } = useLanguage();
   const locale = language === "en" ? "en" : "pt";
@@ -52,6 +66,7 @@ export default function ProcessPreview() {
 
   const imageX = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const contentX = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+  const isLgUp = useIsLgUp();
 
   return (
     <section ref={sectionRef} className="relative bg-[#f5f5f0] overflow-hidden">
@@ -60,7 +75,7 @@ export default function ProcessPreview() {
         {/* Image Side */}
         <motion.div
           className="relative lg:w-1/2 h-[60vh] lg:h-auto lg:sticky lg:top-0"
-          style={{ x: imageX }}
+          style={{ x: isLgUp ? imageX : 0 }}
         >
           <div className="absolute inset-0 overflow-hidden">
             <motion.img
@@ -93,7 +108,7 @@ export default function ProcessPreview() {
         <motion.div
           ref={contentRef}
           className="lg:w-1/2 py-20 lg:py-32 px-6 md:px-12 lg:px-20"
-          style={{ x: contentX }}
+          style={{ x: isLgUp ? contentX : 0 }}
         >
           <div className="max-w-xl ml-auto">
             {/* Header */}
